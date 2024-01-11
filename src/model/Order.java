@@ -1,18 +1,30 @@
 package model;
 
+import java.util.List;
+
 public class Order {
     private int id;
     private String code;
     private Customer customer;
     private int totalPay;
     private Staff staff;
+    private List<Product> products;
 
-    public Order(int id, String code, Customer customer, int totalPay, Staff staff) {
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public Order(int id, String code, Customer customer, int totalPay, Staff staff, List<Product> products) {
         this.id = id;
         this.code = code;
         this.customer = customer;
         this.totalPay = totalPay;
         this.staff = staff;
+        this.products = products;
     }
 
     public Order() {
@@ -66,6 +78,7 @@ public class Order {
                 ", customer=" + customer +
                 ", totalPay=" + totalPay +
                 ", staff=" + staff +
+                ", products=" + products +
                 '}';
     }
 }

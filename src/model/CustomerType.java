@@ -1,6 +1,10 @@
 package model;
 
-public class CustomerType {
+import java.io.Serializable;
+
+public class CustomerType implements Serializable {
+    private static final String CUSTOMER_TYPE="src/data/Customer.txt";
+    private static final long serialVersionUID = 9042L;
     private int id;
     private String name;
 

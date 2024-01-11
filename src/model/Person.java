@@ -1,13 +1,16 @@
 package model;
 
-public abstract class People {
+import java.io.Serializable;
+
+public abstract class Person implements Serializable {
+    private static final long serialVersionUID = 88810112004888L;
     private Integer id;
     private String code;
     private String name;
     private int phoneNumber;
     private String gmail;
 
-    public People(Integer id, String code, String name, int phoneNumber, String gmail) {
+    public Person(Integer id, String code, String name, int phoneNumber, String gmail) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -15,7 +18,7 @@ public abstract class People {
         this.gmail = gmail;
     }
 
-    public People() {
+    public Person() {
     }
 
     public Integer getId() {
