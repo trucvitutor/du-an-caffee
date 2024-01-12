@@ -1,6 +1,7 @@
 package view;
 
 import common.ExceptionHandler;
+import common.RegexHandler;
 import controller.CustomerController;
 import controller.OrderController;
 import controller.ProductController;
@@ -10,6 +11,7 @@ import repository.CustomerTypeRepository;
 import repository.ProductTypeRepository;
 import repository.StaffTypeRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -55,7 +57,7 @@ public class MainView {
     private static void orderManagement() {
         int choice;
         while (true) {
-            System.out.println("1.thêm nước uống." + "\n" + "2.hiển thị nước uống" + "\n" + "3.sửa nước uống" + "\n" + "4.xóa nước uống");
+            System.out.println("1.thêm nước uống." + "\n" + "2.hiển thị nước uống" + "\n" + "3.sửa nước uống" + "\n" + "4.xóa nước uống" + "\n" + "5. thoat");
             choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
@@ -66,16 +68,137 @@ public class MainView {
                     display(orderList);
                     break;
                 case 3:
-
+                    editOrder();
                     break;
                 case 4:
+                    deletOrder();
                     break;
+                case 5:
+                    return;
             }
         }
     }
 
-    private static void addOrder() {
+    private static void deletOrder() {
+        System.out.println("Nhập id muốn xóa: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        System.out.println("bạn chắc chắn muốn xóa không " + "\n" +
+                "1.yes" + "\n" +
+                "2.no");
+        int choice = Integer.parseInt(scanner.nextLine());
+        switch (choice) {
+            case 1:
+                orderController.removeOrder(id);
+                System.out.println("xóa thành công");
+                break;
+            case 2:
+                break;
+        }
+    }
 
+    private static void editOrder() {
+        System.out.println("nhập id bạn muốn sửa: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        Order order = orderController.findAllOrder(id);
+        while (order != null) {
+            System.out.println("Nhap code:");
+            String code = scanner.nextLine();
+            System.out.println("Chon khach hang: ");
+            List<Person> customers = CustomerController.displayCustomer();
+            Customer customer = choiceCustomer(customers);
+            System.out.println("Chon nhan vien: ");
+            List<Person> staffs = staffController.findAllStaff();
+            Staff staff = choiceStaff(staffs);
+            System.out.println("Chon san pham: ");
+            List<Product> products = productController.findAllProduct();
+            List<Product> productList = choiceProducts(products);
+            order.setCode(code);
+            order.setCustomer(customer);
+            order.setProducts(productList);
+            order.setStaff(staff);
+            orderController.resetOrder(order);
+
+        }
+    }
+
+    //int id, String code, Customer customer, Staff staff, List<Product> products
+    private static void addOrder() {
+        int id = ExceptionHandler.checkForParseInt("id");
+        System.out.println("Nhap code:");
+        String code = scanner.nextLine();
+        System.out.println("Chon khach hang: ");
+        List<Person> customers = CustomerController.displayCustomer();
+        Customer customer = choiceCustomer(customers);
+        System.out.println("Chon nhan vien: ");
+        List<Person> staffs = staffController.findAllStaff();
+        Staff staff = choiceStaff(staffs);
+        System.out.println("Chon san pham: ");
+        List<Product> products = productController.findAllProduct();
+        List<Product> productList = choiceProducts(products);
+        Order order = new Order(id, code, customer, staff, productList);
+        orderController.saveOrder(order);
+    }
+
+    private static List<Product> choiceProducts(List<Product> products) {
+        List<Product> productList = new ArrayList<>();
+        while (true) {
+            for (Product product : products) {
+                System.out.println(product.getId() + ". " + product.getName());
+            }
+            int choiceStaff = ExceptionHandler.checkForParseInt("lựa chọn của bạn");
+            if (choiceStaff == 0) {
+                break;
+            }
+            for (Product product : products) {
+                if (choiceStaff == product.getId()) {
+                    productList.add(product);
+                }
+            }
+        }
+        return productList;
+    }
+
+    private static Staff choiceStaff(List<Person> people) {
+        while (true) {
+            for (Person c : people) {
+                if (c instanceof Staff) {
+                    System.out.println(c.getId() + ". " + c.getName());
+                }
+            }
+            int choiceStaff = ExceptionHandler.checkForParseInt("lựa chọn của bạn");
+            if (choiceStaff == 0) {
+                return null;
+            }
+            for (Person person : people) {
+                if (choiceStaff == person.getId()) {
+                    if (person instanceof Staff) {
+                        return (Staff) person;
+                    }
+                }
+            }
+        }
+    }
+
+    private static Customer choiceCustomer(List<Person> people) {
+        while (true) {
+            for (Person c : people) {
+                if (c instanceof Customer) {
+                    System.out.println(c.getId() + ". " + c.getName());
+                }
+            }
+            System.out.println("0. Khách vãng lai");
+            int choiceCustomer = ExceptionHandler.checkForParseInt("lựa chọn của bạn");
+            if (choiceCustomer == 0) {
+                return null;
+            }
+            for (Person person : people) {
+                if (choiceCustomer == person.getId()) {
+                    if (person instanceof Customer) {
+                        return (Customer) person;
+                    }
+                }
+            }
+        }
     }
 
     private static void display(List<Order> orderList) {
@@ -84,19 +207,6 @@ public class MainView {
         }
     }
 
-//    private static Order addOrder() {
-//        System.out.println("Please enter your id");
-//        int id = Integer.parseInt(scanner.nextLine());
-//        System.out.println("Please enter your code");
-//        String code = scanner.nextLine();
-//        System.out.println("Please enter your customer");
-//        Customer customer = new Customer();
-//        System.out.println("Please enter your totalPay");
-//        int totalPay = Integer.parseInt(scanner.nextLine());
-//        System.out.println("Please enter your staff");
-//        Staff staff = new Staff();
-//        return new Order(id, code, customer, totalPay, staff);
-//    }
 
     private static void ProductManagement() {
         int choice;
@@ -147,7 +257,7 @@ public class MainView {
         Product product = productController.findIdProduct(id);
         while (product != null) {
             System.out.println("Please enter your name");
-            String name = scanner.nextLine();
+            String name = RegexHandler.checkRegexName();
             System.out.println("Please enter your price");
             double price = Double.parseDouble(scanner.nextLine());
             System.out.println("Please enter your productType");
@@ -171,7 +281,7 @@ public class MainView {
         System.out.println("Please enter your id");
         int id = Integer.parseInt(scanner.nextLine());
         System.out.println("Please enter your name");
-        String name = scanner.nextLine();
+        String name = RegexHandler.checkRegexName();
         System.out.println("Please enter your price");
         double price = Double.parseDouble(scanner.nextLine());
         System.out.println("Please enter your productType");
@@ -186,7 +296,7 @@ public class MainView {
         int choice;
         while (true) {
             System.out.println("1.thêm nhân viên" + "\n" + "2.hiển thị nhân viên" + "\n" + "3.sửa nhân viên" + "\n" +
-                    "4.xóa nhân viên");
+                    "4.xóa nhân viên" + "\n" + "5. thoat");
             choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
@@ -202,6 +312,8 @@ public class MainView {
                 case 4:
                     deleteStaff();
                     break;
+                case 5:
+                    return;
             }
         }
     }
@@ -232,9 +344,9 @@ public class MainView {
             System.out.println("Please enter your code");
             String code = scanner.nextLine();
             System.out.println("Please enter your name");
-            String name = scanner.nextLine();
+            String name = RegexHandler.checkRegexName();
             System.out.println("Please enter your phoneNumber");
-            int phoneNumber = Integer.parseInt(scanner.nextLine());
+            int phoneNumber =  Integer.parseInt(RegexHandler.checkRegexName());
             System.out.println("Please enter your gmail");
             String gmail = scanner.nextLine();
             System.out.println(" nhập idCard ");
@@ -273,9 +385,9 @@ public class MainView {
         System.out.println("Please enter your code");
         String code = scanner.nextLine();
         System.out.println("Please enter your name");
-        String name = scanner.nextLine();
+        String name = RegexHandler.checkRegexName();
         System.out.println("Please enter your phoneNumber");
-        int phoneNumber = Integer.parseInt(scanner.nextLine());
+        int phoneNumber = Integer.parseInt(RegexHandler.checkRegexName());
         System.out.println("Please enter your gmail");
         String gmail = scanner.nextLine();
         System.out.println(" nhập idCard ");
@@ -305,8 +417,7 @@ public class MainView {
                     addCustomer();
                     break;
                 case 2:
-                    List<Person> customers = controller.displayCustomer();
-                    DeCus(customers);
+                    showCustomer();
                     break;
                 case 3:
                     editCustomer();
@@ -320,12 +431,29 @@ public class MainView {
         }
     }
 
-    private static void DeCus(List<Person> customers) {
-        for (Person a : customers) {
-            System.out.println(a);
+    private static void showCustomer() {
+        List<Person> customers = controller.displayCustomer();
+        if (customers.isEmpty()) {
+            System.out.println("Không có dữ liệu trong bảng!");
+        } else {
+            StringBuilder str = new StringBuilder("" +
+                    "+----+----------------+-----------------+------------------------+-----------------+\n" +
+                    "| ID | Tên khách hàng |  Số điện thoại  |         Email          | Loại khách hàng |\n" +
+                    "+----+----------------+-----------------+------------------------+-----------------+\n");
+            for (Person person : customers) {
+                if (person instanceof Customer)
+                    str.append(person);
+            }
+            System.out.println(str);
         }
-    }
 
+//    private static void DeCus(List<Person> customers) {
+//
+//        for (Person a : customers) {
+//            System.out.println(a);
+//        }
+//    }
+    }
 
     private static void editCustomer() {
         System.out.println("Mời nhập id muốn edit: ");
@@ -335,9 +463,9 @@ public class MainView {
             System.out.println("Please enter your code");
             String code = scanner.nextLine();
             System.out.println("Please enter your name");
-            String name = scanner.nextLine();
+            String name = RegexHandler.checkRegexName();
             System.out.println("Please enter your phoneNumber");
-            int phoneNumber = Integer.parseInt(scanner.nextLine());
+            int phoneNumber = Integer.parseInt(RegexHandler.checkRegexName());
             System.out.println("Please enter your gmail");
             String gmail = scanner.nextLine();
             System.out.println("Please enter your customerType");
@@ -361,9 +489,9 @@ public class MainView {
         System.out.println("Please enter your code");
         String code = scanner.nextLine();
         System.out.println("Please enter your name");
-        String name = scanner.nextLine();
+        String name = RegexHandler.checkRegexName();
         System.out.println("Please enter your phoneNumber");
-        int phoneNumber = Integer.parseInt(scanner.nextLine());
+        int phoneNumber = Integer.parseInt(RegexHandler.checkPhoneNumber());
         System.out.println("Please enter your gmail");
         String gmail = scanner.nextLine();
         System.out.println("Please enter your customerType");

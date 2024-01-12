@@ -1,6 +1,9 @@
 package model;
 
-public class StaffType {
+import java.io.Serializable;
+
+public class StaffType implements Serializable {
+    private static final long serialVersionUID = 1042L;
     private int id;
     private String name;
 

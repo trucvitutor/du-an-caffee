@@ -16,4 +16,16 @@ public class ExceptionHandler {
             }
         }
     }
+    public static int checkParseInteger() {
+        int value;
+        while (true) {
+            try {
+                value = Integer.parseInt(scanner.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.print("Sai định dạng, nhập lại:");
+            }
+        }
+        return value;
+    }
 }

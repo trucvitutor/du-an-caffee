@@ -1,12 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Order {
+public class Order implements Serializable {
+    private static final long serialVersionUID = 4042L;
     private int id;
     private String code;
     private Customer customer;
-    private int totalPay;
     private Staff staff;
     private List<Product> products;
 
@@ -18,11 +19,10 @@ public class Order {
         this.products = products;
     }
 
-    public Order(int id, String code, Customer customer, int totalPay, Staff staff, List<Product> products) {
+    public Order(int id, String code, Customer customer, Staff staff, List<Product> products) {
         this.id = id;
         this.code = code;
         this.customer = customer;
-        this.totalPay = totalPay;
         this.staff = staff;
         this.products = products;
     }
@@ -54,14 +54,6 @@ public class Order {
         this.customer = customer;
     }
 
-    public int getTotalPay() {
-        return totalPay;
-    }
-
-    public void setTotalPay(int totalPay) {
-        this.totalPay = totalPay;
-    }
-
     public Staff getStaff() {
         return staff;
     }
@@ -76,7 +68,6 @@ public class Order {
                 "id=" + id +
                 ", code='" + code + '\'' +
                 ", customer=" + customer +
-                ", totalPay=" + totalPay +
                 ", staff=" + staff +
                 ", products=" + products +
                 '}';

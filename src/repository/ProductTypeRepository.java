@@ -15,8 +15,8 @@ public class ProductTypeRepository implements IProductTypeRepository {
     @Override
     public List<ProductType> findProduct() {
         FileService<ProductType> customerTypeFileService = new FileService<>();
-        List<ProductType> fileServices = Arrays.asList(new ProductType(1, "Cà phê sữa"), new ProductType(2, "trà đào cam " +
-                "xả"));
+        List<ProductType> fileServices = Arrays.asList(new ProductType(1, "Cà phê "),
+                new ProductType(2, "trà "), new ProductType(3, " nước giải khát "));
         customerTypeFileService.writeFile(TYPE_PRODUCT, fileServices);
         return customerTypeFileService.readFile(TYPE_PRODUCT);
     }
