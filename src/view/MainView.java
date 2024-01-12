@@ -342,7 +342,7 @@ public class MainView {
         Staff staff = StaffController.findidStaff(id);
         while (staff != null) {
             System.out.println("Please enter your code");
-            String code = scanner.nextLine();
+            String code =RegexHandler.checkStaffCode();
             System.out.println("Please enter your name");
             String name = RegexHandler.checkRegexName();
             System.out.println("Please enter your phoneNumber");
@@ -350,7 +350,7 @@ public class MainView {
             System.out.println("Please enter your gmail");
             String gmail = scanner.nextLine();
             System.out.println(" nhập idCard ");
-            String idCard = scanner.nextLine();
+            String idCard = RegexHandler.checkIdCard();
             System.out.println(" nhập salary");
             double salary = Double.parseDouble(scanner.nextLine());
             System.out.println("nhập address");
@@ -383,7 +383,7 @@ public class MainView {
         System.out.println("Please enter your id");
         int id = Integer.parseInt(scanner.nextLine());
         System.out.println("Please enter your code");
-        String code = scanner.nextLine();
+        String code =RegexHandler.checkStaffCode();
         System.out.println("Please enter your name");
         String name = RegexHandler.checkRegexName();
         System.out.println("Please enter your phoneNumber");
@@ -391,7 +391,7 @@ public class MainView {
         System.out.println("Please enter your gmail");
         String gmail = scanner.nextLine();
         System.out.println(" nhập idCard ");
-        String idCard = scanner.nextLine();
+        String idCard = RegexHandler.checkIdCard();
         System.out.println(" nhập salary");
         double salary = Double.parseDouble(scanner.nextLine());
         System.out.println("nhập address");
@@ -447,12 +447,7 @@ public class MainView {
             System.out.println(str);
         }
 
-//    private static void DeCus(List<Person> customers) {
-//
-//        for (Person a : customers) {
-//            System.out.println(a);
-//        }
-//    }
+
     }
 
     private static void editCustomer() {
@@ -461,7 +456,7 @@ public class MainView {
         Customer customer = controller.findId(id);
         if (customer != null) {
             System.out.println("Please enter your code");
-            String code = scanner.nextLine();
+            String code = RegexHandler.checkCodeCustomer();
             System.out.println("Please enter your name");
             String name = RegexHandler.checkRegexName();
             System.out.println("Please enter your phoneNumber");
@@ -487,7 +482,7 @@ public class MainView {
         System.out.println("Please enter your id");
         int id = Integer.parseInt(scanner.nextLine());
         System.out.println("Please enter your code");
-        String code = scanner.nextLine();
+        String code = RegexHandler.checkCodeCustomer();
         System.out.println("Please enter your name");
         String name = RegexHandler.checkRegexName();
         System.out.println("Please enter your phoneNumber");
