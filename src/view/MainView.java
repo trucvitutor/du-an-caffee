@@ -259,7 +259,7 @@ public class MainView {
             System.out.println("Please enter your name");
             String name = RegexHandler.checkRegexName();
             System.out.println("Please enter your price");
-            double price = Double.parseDouble(scanner.nextLine());
+            double price = ExceptionHandler.checkParseDouble();
             System.out.println("Please enter your productType");
             List<ProductType> products = productTypeRepository.findProduct();
             ProductType productType = choiceProductType(products);
@@ -283,7 +283,7 @@ public class MainView {
         System.out.println("Please enter your name");
         String name = RegexHandler.checkRegexName();
         System.out.println("Please enter your price");
-        double price = Double.parseDouble(scanner.nextLine());
+        double price =ExceptionHandler.checkParseDouble();
         System.out.println("Please enter your productType");
         List<ProductType> products = productTypeRepository.findProduct();
         ProductType productType = choiceProductType(products);

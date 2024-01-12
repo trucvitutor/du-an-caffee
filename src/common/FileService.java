@@ -34,18 +34,6 @@ public class FileService<E> {
         }
         return orderList;
     }
-//    public  List<E> readType(String path) {
-//        List<E> orderList = new ArrayList<>();
-//        try {
-//            FileInputStream fileInputStream = new FileInputStream(path);
-//            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-//            orderList = (List<E>) objectInputStream.readObject();
-//            fileInputStream.close();
-//            objectInputStream.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return orderList;
-//    }
+
 
 }

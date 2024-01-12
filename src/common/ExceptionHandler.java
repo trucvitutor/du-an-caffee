@@ -16,16 +16,19 @@ public class ExceptionHandler {
             }
         }
     }
-    public static int checkParseInteger() {
-        int value;
+
+    public static double checkParseDouble() {
+        double value;
         while (true) {
             try {
-                value = Integer.parseInt(scanner.nextLine());
+                value = Double.parseDouble(scanner.nextLine());
                 break;
             } catch (NumberFormatException e) {
-                System.out.print("Sai định dạng, nhập lại:");
+                System.out.println("Wrong format");
+                System.out.print("Try again: ");
             }
         }
         return value;
     }
+
 }
