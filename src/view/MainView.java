@@ -33,7 +33,7 @@ public class MainView {
                     "2.★ Quản lý nhân viên ★." + "\n" +
                     "3.★ Quản lý sản phẩm ★." + "\n" +
                     "4.★ Order ★." + "\n" +
-                    "5.✘ Thoát ✘");
+                    "5.✘ Kết thúc ✘");
             choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
@@ -346,7 +346,7 @@ public class MainView {
             System.out.println("Please enter your name");
             String name = RegexHandler.checkRegexName();
             System.out.println("Please enter your phoneNumber");
-            int phoneNumber =  Integer.parseInt(RegexHandler.checkRegexName());
+            int phoneNumber =  Integer.parseInt(RegexHandler.checkPhoneNumber());
             System.out.println("Please enter your gmail");
             String gmail = scanner.nextLine();
             System.out.println(" nhập idCard ");
@@ -387,7 +387,7 @@ public class MainView {
         System.out.println("Please enter your name");
         String name = RegexHandler.checkRegexName();
         System.out.println("Please enter your phoneNumber");
-        int phoneNumber = Integer.parseInt(RegexHandler.checkRegexName());
+        int phoneNumber = ExceptionHandler.checkForParseInt(RegexHandler.checkPhoneNumber());
         System.out.println("Please enter your gmail");
         String gmail = scanner.nextLine();
         System.out.println(" nhập idCard ");
@@ -460,7 +460,7 @@ public class MainView {
             System.out.println("Please enter your name");
             String name = RegexHandler.checkRegexName();
             System.out.println("Please enter your phoneNumber");
-            int phoneNumber = Integer.parseInt(RegexHandler.checkRegexName());
+            int phoneNumber = Integer.parseInt(RegexHandler.checkPhoneNumber());
             System.out.println("Please enter your gmail");
             String gmail = scanner.nextLine();
             System.out.println("Please enter your customerType");
